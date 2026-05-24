@@ -1,0 +1,76 @@
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+
+  try {
+
+    const body = await req.json();
+
+    const { id } = body;
+
+    const reservation =
+      await prisma.reservation.findUnique({
+        where: {
+          id,
+        },
+      });
+
+    if (!reservation) {
+
+      return NextResponse.json(
+        {
+          error: "Reservation not found",
+        },
+        {
+          status: 404,
+        }
+      );
+
+    }
+
+    if (
+      new Date() >
+      new Date(reservation.expiresAt)
+    ) {
+
+      return NextResponse.json(
+        {
+          error: "Reservation expired",
+        },
+        {
+          status: 410,
+        }
+      );
+
+    }
+
+    const updated =
+      await prisma.reservation.update({
+        where: {
+          id,
+        },
+        data: {
+          status: "CONFIRMED",
+        },
+      });
+
+    return NextResponse.json({
+      success: true,
+      reservation: updated,
+    });
+
+  } catch (error: any) {
+
+    return NextResponse.json(
+      {
+        error: error.message,
+      },
+      {
+        status: 500,
+      }
+    );
+
+  }
+
+}

@@ -175,9 +175,16 @@ screenshots
 
 ![Analytics Graph](./screenshots/multipleproductgraph.jpeg)
 
+![More Inventory](./screenshots/moreinventory.jpeg)
+
+![Product With Product ID](./screenshots/productwithprodid.jpeg)
+
 # Author
 
 Pugazhendhi
 
 GitHub:  
 https://github.com/pugazhendhis2022b-code
+
+ live URL :
+ https://allo-inventory-reservation-system-t-nine.vercel.app/

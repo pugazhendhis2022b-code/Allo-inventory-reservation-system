@@ -1,10 +1,19 @@
 import { prisma } from "@/lib/prisma";
+import { z } from "zod";
 
 export async function POST(req: Request) {
 
+    const reservationSchema = z.object({
+  inventoryId: z.string(),
+  quantity: z.number().min(1),
+});
+
   try {
 
-    const body = await req.json();
+    const body =
+  reservationSchema.parse(
+    await req.json()
+  );
 
     const {
       inventoryId,
@@ -39,16 +48,28 @@ export async function POST(req: Request) {
         );
       }
 
-      await tx.inventory.update({
-        where: {
-          id: inventoryId,
-        },
-        data: {
-          reservedUnits: {
-            increment: quantity,
-          },
-        },
-      });
+     const updatedInventory =
+  await tx.inventory.updateMany({
+    where: {
+      id: inventoryId,
+      reservedUnits: {
+        lte:
+          inventory.totalUnits -
+          quantity,
+      },
+    },
+    data: {
+      reservedUnits: {
+        increment: quantity,
+      },
+    },
+  });
+
+if (updatedInventory.count === 0) {
+  throw new Error(
+    "Stock conflict detected"
+  );
+}
 
       const createdReservation =
         await tx.reservation.create({

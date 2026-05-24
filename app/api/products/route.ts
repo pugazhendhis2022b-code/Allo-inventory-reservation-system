@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function GET() {
   const products = await prisma.inventory.findMany({

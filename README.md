@@ -163,6 +163,18 @@ screenshots
 
 ![Prisma Reservation](./screenshots/prismastudioreservation.jpeg)
 
+## Updated Inventory Dashboard
+
+![Updated Dashboard](./screenshots/moreupdatedlist.jpeg)
+
+## Multiple Reservation History
+
+![Reservation History](./screenshots/multiplehistory.jpeg)
+
+## Multi Product Analytics
+
+![Analytics Graph](./screenshots/multipleproductgraph.jpeg)
+
 # Author
 
 Pugazhendhi

@@ -8,7 +8,7 @@ export async function GET() {
     },
   });
 
-  const formatted = products.map((item) => ({
+  const formatted = products.map((item: any) => ({
     inventoryId: item.id,
     product: item.product.name,
     warehouse: item.warehouse.name,
